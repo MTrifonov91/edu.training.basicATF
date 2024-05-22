@@ -5,19 +5,42 @@ import org.example.project.api.dtos.DTO;
 import org.openqa.selenium.WebDriver;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Context {
 
-    protected static WebDriver webDriver;
+    private static Context instance;
+    private Map<ContextKeys, Object> context;
 
-    protected static Response response;
-    protected static DTO dto;
+    private Context() {
+        instance = this;
+        context = new HashMap<>();
+    }
 
-    protected static List<DTO> dtos;
+    public static Context getInstance() {
+        if (instance == null) {
+            new Context();
+        }
+        return instance;
+    }
 
-    Map<String, String> objects = new HashMap<>();
+    public static void tearDown() {
+        if (instance != null) {
+            instance.context.clear();
+        }
+    }
 
+    public <T> T getContext(ContextKeys key, Class<T> type) {
+        return type.cast(context.get(key));
+    }
+    public void setContext(ContextKeys key, Object value) {
+        context.put(key, value);
+    }
+
+    public enum ContextKeys {
+        DRIVER,
+        RESPONSE,
+        DTO
+    }
 
 }

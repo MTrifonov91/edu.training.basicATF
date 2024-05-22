@@ -1,6 +1,7 @@
 package org.example.project.ui.pages.blocks;
 
 import lombok.Getter;
+import org.example.project.ui.htmlelements.annotations.Name;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -21,6 +22,7 @@ public class ProductCardBlock {
     @FindBy(xpath = ".//div[@class='inventory_item_price']")
     private WebElement productPrice;
 
+    @Name("Add to Cart button")
     @FindBy(xpath = ".//button[contains(@data-test,'add-to-cart')]")
     private WebElement addToCartButton;
 

@@ -1,4 +1,4 @@
-@Api
+@Api @UpdateUser
 Feature: Validate update employee via API
 
   Scenario: Validate update employee's updated at time via API with Response = 200

@@ -6,10 +6,15 @@ import org.example.project.configurations.scenario_context.Context;
 import org.example.project.ui.browser.Actions;
 import org.example.project.ui.pages.CheckoutCompletePage;
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.WebDriver;
 
-public class CheckoutCompleteSteps extends Context {
+import static org.example.project.configurations.scenario_context.Context.ContextKeys.DRIVER;
 
-    CheckoutCompletePage checkoutCompletePage = new CheckoutCompletePage(webDriver);
+public class CheckoutCompleteSteps {
+
+    private static final Context context = Context.getInstance();
+
+    CheckoutCompletePage checkoutCompletePage = new CheckoutCompletePage(context.getContext(DRIVER, WebDriver.class));
 
     @Then("Checkout Complete page is displayed")
     public void checkoutCompletePageIsDisplayed() {

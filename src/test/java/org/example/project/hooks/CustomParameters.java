@@ -12,7 +12,6 @@ import org.example.project.api.dtos.responses.resources.ResourcesResponse;
 import org.example.project.configurations.api_specifications.EndPoint;
 
 import java.lang.reflect.Type;
-import java.util.List;
 import java.util.Map;
 
 public class CustomParameters {

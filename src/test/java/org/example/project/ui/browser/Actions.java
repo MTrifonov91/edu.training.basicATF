@@ -1,6 +1,7 @@
 package org.example.project.ui.browser;
 
 import org.example.project.configurations.driverfactory.DriverFactory;
+import org.example.project.configurations.logs.Log;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -23,7 +24,9 @@ public class Actions {
     public static void clickOnWebElement(WebElement webElement) {
         waiter.until(ExpectedConditions.visibilityOf(webElement));
         waiter.until(ExpectedConditions.elementToBeClickable(webElement));
+        String name = webElement.getAccessibleName();
         webElement.click();
+        Log.info(name + " element was clicked");
     }
 
     public static void sendKeys(WebElement field, String inputData) {
@@ -31,5 +34,6 @@ public class Actions {
         waiter.until(ExpectedConditions.elementToBeClickable(field));
         field.clear();
         field.sendKeys(inputData);
+        Log.info(inputData + " was inserted into: " + field.getAccessibleName() + " input field");
     }
 }

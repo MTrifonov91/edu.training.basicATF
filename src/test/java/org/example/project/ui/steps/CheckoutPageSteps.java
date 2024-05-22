@@ -8,12 +8,17 @@ import org.example.project.configurations.scenario_context.Context;
 import org.example.project.ui.browser.Actions;
 import org.example.project.ui.pages.CheckoutPage;
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.WebDriver;
 
 import java.util.Map;
 
-public class CheckoutPageSteps extends Context {
+import static org.example.project.configurations.scenario_context.Context.ContextKeys.DRIVER;
 
-    CheckoutPage checkoutPage = new CheckoutPage(webDriver);
+public class CheckoutPageSteps {
+
+    private static final Context context = Context.getInstance();
+
+    CheckoutPage checkoutPage = new CheckoutPage(context.getContext(DRIVER, WebDriver.class));
 
     @Then("Checkout page is displayed")
     public void checkoutPageIsDisplayed() {

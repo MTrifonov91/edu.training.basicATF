@@ -7,12 +7,16 @@ import org.example.project.configurations.scenario_context.Context;
 import org.example.project.ui.browser.Actions;
 import org.example.project.ui.pages.LoginPage;
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.WebDriver;
 
 import static org.example.project.configurations.properties.PropertyConfigurator.getProperty;
+import static org.example.project.configurations.scenario_context.Context.ContextKeys.DRIVER;
 
-public class LoginPageSteps extends Context {
+public class LoginPageSteps {
 
-    LoginPage loginPage = new LoginPage(webDriver);
+    private static final Context context = Context.getInstance();
+
+    LoginPage loginPage = new LoginPage(context.getContext(DRIVER, WebDriver .class));
 
     @Given("Login page is displayed")
     public void loginPageIsDisplayed() {

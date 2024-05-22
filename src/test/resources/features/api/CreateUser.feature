@@ -1,4 +1,4 @@
-@Api
+@Api @CreateUser
 Feature: Create a User via API
 
   Scenario: Create a User via API with Response = 201
@@ -7,4 +7,4 @@ Feature: Create a User via API
       | name | morpheus |
       | job  | leader   |
     And A user creation request is sent to endpoint: POST_NEW_USER
-    Then Response contains createdAt timestamp equal to current time
+    Then Response contains createdAt timestamp within range of current time + 5 seconds

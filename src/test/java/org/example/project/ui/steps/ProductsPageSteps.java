@@ -1,19 +1,29 @@
 package org.example.project.ui.steps;
 
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.example.project.configurations.scenario_context.Context;
 import org.example.project.ui.browser.Actions;
 import org.example.project.ui.pages.ProductsPage;
+import org.example.project.utils.screenshot.ScreenShotUtil;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
 
-public class ProductsPageSteps extends Context {
+import static org.example.project.configurations.scenario_context.Context.ContextKeys.DRIVER;
 
-    ProductsPage productsPage = new ProductsPage(webDriver);
+public class ProductsPageSteps {
+
+    private static final Context context = Context.getInstance();
+
+    ProductsPage productsPage = new ProductsPage(context.getContext(DRIVER, WebDriver.class));
 
     @Then("Products page is displayed")
     public void productsPageIsDisplayed() {
@@ -31,11 +41,14 @@ public class ProductsPageSteps extends Context {
                 .toList();
 
         Assertions.assertLinesMatch(expectedItems, actualItems);
+
+        System.out.println();
     }
 
     @When("User adds {string} to cart")
     public void userAddsSauceLabsBackpackToCart(String productTitle) {
         Actions.clickOnWebElement(productsPage.getProductCardByTitle(productTitle).getAddToCartButton());
+
     }
 
     @Then("Your Cart has {string} label displayed")

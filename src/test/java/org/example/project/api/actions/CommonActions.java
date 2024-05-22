@@ -2,13 +2,17 @@ package org.example.project.api.actions;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import io.restassured.response.Response;
 import org.example.project.configurations.api_specifications.ApiSpecifications;
 import org.example.project.configurations.api_specifications.EndPoint;
 import org.example.project.configurations.scenario_context.Context;
 
 import static io.restassured.RestAssured.given;
+import static org.example.project.configurations.scenario_context.Context.ContextKeys;
 
-public class CommonActions extends Context {
+public class CommonActions {
+
+    private static final Context context = Context.getInstance();
 
     @Given("Specifications are installed with expected response code {int}")
     public void specsAreInstalledWithCode(int code) {
@@ -17,10 +21,12 @@ public class CommonActions extends Context {
 
     @When("A GET request is sent to endpoint: {endPoint}")
     public void aGetRequestIsMadeTo(EndPoint endPoint) {
-        Context.response = given()
+        Response response = given()
                 .when()
                 .get(endPoint.getValue())
                 .then().log().all()
                 .extract().response();
+
+        context.setContext(ContextKeys.RESPONSE, response);
     }
 }

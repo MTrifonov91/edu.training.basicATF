@@ -1,6 +1,7 @@
 package org.example.project.ui.pages;
 
 import lombok.Getter;
+import org.example.project.ui.htmlelements.annotations.Name;
 import org.example.project.ui.pages.blocks.ProductCardBlock;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +14,7 @@ import java.util.List;
 @Getter
 public class ProductsPage extends Page {
 
+    @Name("Page Title")
     @FindBy(xpath = "//span[@class='title']")
     private WebElement pageTitle;
 

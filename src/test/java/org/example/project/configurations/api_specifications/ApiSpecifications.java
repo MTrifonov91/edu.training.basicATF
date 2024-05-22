@@ -6,6 +6,12 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import org.junit.jupiter.api.Test;
+
+import java.sql.SQLOutput;
+
+import static org.example.project.configurations.api_specifications.EndPoint.BASE_URL;
+import static org.example.project.configurations.api_specifications.EndPoint.GET_USER;
 
 public class ApiSpecifications {
     public static RequestSpecification requestSpec(EndPoint url) {

@@ -1,10 +1,9 @@
 package org.example.project.api.actions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.cucumber.datatable.DataTable;
-import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.example.project.api.dtos.responses.resources.Datum;
 import org.example.project.api.dtos.responses.resources.ResourcesResponse;
@@ -18,11 +17,12 @@ import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static org.example.project.configurations.scenario_context.Context.ContextKeys;
 
 @Slf4j
-public class ResourcesValidationActions extends Context {
+public class ResourcesValidationActions {
 
-
+    private static final Context context = Context.getInstance();
 
     @Then("Response matches the following data:")
     public void responseMatchesData(List<Datum> data) {
@@ -40,18 +40,21 @@ public class ResourcesValidationActions extends Context {
                 .map(Datum::new)
                 .toList();
 
-        List<Datum> actualDatumsList = Context.response.body().jsonPath().getList("data", Datum.class);
+        List<Datum> actualDatumsList = context.getContext(ContextKeys.RESPONSE, Response.class)
+                .body().jsonPath().getList("data", Datum.class);
 
         Assertions.assertIterableEquals(expectedDatumList, actualDatumsList);
     }
 
     @When("A get resources request is sent to endpoint: {endPoint}")
     public void aGetResourcesRequestIsSent(EndPoint endPoint) {
-        Context.response = given()
+        Response response = given()
                 .when()
                 .get(endPoint.getValue())
                 .then().log().all()
                 .extract().response();
+
+        context.setContext(ContextKeys.RESPONSE, response);
     }
 
     @Then("Response matches data from the following JSON file: {string}")
@@ -62,14 +65,14 @@ public class ResourcesValidationActions extends Context {
                 ResourcesResponse.class
         );
 
-        ResourcesResponse actualResponse = Context.response.as(ResourcesResponse.class);
+        ResourcesResponse actualResponse = context.getContext(ContextKeys.RESPONSE, Response.class).as(ResourcesResponse.class);
 
         Assertions.assertEquals(expectedResponse, actualResponse);
     }
 
     @Then("Response matches the following dataaaa:")
     public void responseMatchesTheFollowingDataaaa(ResourcesResponse expectedResponse) {
-        ResourcesResponse actualResponse = Context.response.as(ResourcesResponse.class);
+        ResourcesResponse actualResponse = context.getContext(ContextKeys.RESPONSE, Response.class).as(ResourcesResponse.class);
         Assertions.assertEquals(expectedResponse, actualResponse);
     }
 }

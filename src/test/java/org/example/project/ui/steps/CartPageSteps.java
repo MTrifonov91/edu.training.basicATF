@@ -6,10 +6,15 @@ import org.example.project.configurations.scenario_context.Context;
 import org.example.project.ui.browser.Actions;
 import org.example.project.ui.pages.CartPage;
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.WebDriver;
 
-public class CartPageSteps extends Context {
+import static org.example.project.configurations.scenario_context.Context.ContextKeys.DRIVER;
 
-    CartPage cartPage = new CartPage(webDriver);
+public class CartPageSteps {
+
+    private static final Context context = Context.getInstance();
+
+    CartPage cartPage = new CartPage(context.getContext(DRIVER, WebDriver.class));
 
     @Given("Your Cart page is displayed")
     public void cartPageIsDisplayed() {
